@@ -8,19 +8,20 @@ You have already seen some functions, such as `count`, `conj`, `first`, and `res
 A function is a discrete piece of code that takes in some values (called _arguments_) and returns other values. Let's see an example:
 
 ```clj
-(defn triple
-  "Given a number, return 3 times that number."
-  [x]
+(fn [x]
   (+ x x x))
 ```
 
 In this code:
-
-* `defn` specifies that we are defining a function.
-* `triple` is the name of this function.
-* The string on the next line is the documentation for the function. This is optional.
+* `fn` specifies that we are creating a function.
 * `[x]` is the list of arguments. We have one argument called `x`.
 * `(+ x x x)` is the _body_ of the function. This is what executes when we use this function.
+
+This is all that's needed to create a function, but before we use it, let's give it a name.  Naming a function can be done the same way as the other named values we created earlier.
+
+```clj
+(def triple (fn [x] (+ x x x)))
+```
 
 To use `triple`, we _call the function_, just like we did with all the functions we've already used.
 
@@ -29,6 +30,22 @@ To use `triple`, we _call the function_, just like we did with all the functions
 (triple 3/2)  ;=> 9/2
 (triple 30.3) ;=> 90.9
 ```
+
+Now that we have seen that creating and naming a function in Clojure is a lot like creating other named values,
+let's look at a more common and condensed way of defining functions.
+
+```clj
+(defn triple
+  "Given a number, return 3 times that number."
+  [x]
+  (+ x x x))
+```
+
+In this code:
+* `defn` is a contraction of _def_ and _fn_ that states we are defining a function.
+* `triple` is still the name of this function.
+* The string on the second line is documentation for the function. This is optional.
+* `[x]` and `(+ x x x)` are the arguments list and function body, just like in the previous examples.
 
 Functions can take more than one argument. Let's make an `average` function that takes two numbers and gives us the average of those two numbers:
 
@@ -147,7 +164,7 @@ First, `reduce` calls `join-with-space` with "i" and "like", returning "i like".
 * `(join-with-space "i like peanut butter" "and")`
 * `(join-with-space "i like peanut butter and" "jelly")`
 
-One more example of a function that uses a function, sort-by. It takes a function and sorts a sequence by applying that function to each element of the sequence. 
+One more example of a function that uses a function, sort-by. It takes a function and sorts a sequence by applying that function to each element of the sequence.
 
 ```clj
 (sort-by val > {:amy 3, :renee 5, :lisa 4})
@@ -155,17 +172,17 @@ One more example of a function that uses a function, sort-by. It takes a functio
 ```
 ### Anonymous functions
 
-So far, all the functions we've seen have names, like `+` and `str` and `reduce`. Functions don't have to have names, though, just like values don't have to have names. We call functions without names _anonymous functions_.
+So far, all the functions we've used have names, like `+` and `str` and `reduce`. Functions don't have to have names, though, just like values don't have to have names. We call functions without names _anonymous functions_.
 
 Before we go forward, you should understand that you can _always_ feel free to name all of your functions. There is nothing wrong at all with doing that. However, you will see Clojure code with anonymous functions, so you should be able to understand it.
 
-An anonymous function is created with `fn`, like so:
+As we saw earlier, an anonymous function is created with `fn`, like so:
 
 ```clj
 (fn [string1 string2] (str string1 " " string2))
 ```
 
-You might recognize that as the function we created before that we called `join-with-space`. `fn` works a lot like `defn`: we still have arguments listed as a vector and a function body. I didn't break the line in the anonymous function above, but you can, just like you can in a named function.
+You might recognize that as the function we created before that we called `join-with-space`, but without the line break after the arguments definition.
 
 Why would you ever do this? Anonymous functions can be very useful when we have functions that take other functions. Let's take each of our examples above, but use anonymous functions instead of named functions.
 
